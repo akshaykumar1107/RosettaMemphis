@@ -1,0 +1,47 @@
+package com.rosetta.app.entity;
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(
+        name = "api_keys",
+        uniqueConstraints = @UniqueConstraint(name = "uk_api_keys_api_key", columnNames = "api_key")//@Column(name = "api_key", unique=true) not possible for @Embeddable
+)
+public class ApiKey
+{
+    @EmbeddedId
+    private ApiKeyId id;
+
+    @ManyToOne(fetch = FetchType.LAZY)//fetch user record only when getUser is called (use debugger)
+    @MapsId("userId")//uses id.userId
+    @JoinColumn(name = "user_id")//fk column of api_keys
+    private User user;
+
+    public ApiKey(){}
+
+    public ApiKey(User user, String apiKey)
+    {
+        this.user = user;
+        this.id = new ApiKeyId(user.getUserId(), apiKey);
+    }
+
+    public ApiKeyId getId()
+    {
+        return id;
+    }
+
+    public void setId(ApiKeyId id)
+    {
+        this.id = id;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
+}
