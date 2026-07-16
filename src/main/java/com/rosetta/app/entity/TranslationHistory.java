@@ -11,7 +11,7 @@ public class TranslationHistory
     @Column(name = "translation_id")
     private Long translationId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)//Many records in the current table can refer to one record in the parent table.
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
