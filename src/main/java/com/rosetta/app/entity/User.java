@@ -14,9 +14,9 @@ public class User
     @Column(name = "plan", nullable = false)
     private Integer plan;
 
-    public User() {}
+    public User() {}//no-arg constructor is required.
 
-    public User(Integer plan)
+    public User(Integer plan)//no need to pass pk in co nstructor.
     {
         this.plan = plan;
     }
