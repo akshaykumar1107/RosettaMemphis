@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 @Service
 public class KafkaProducerService implements Producer
 {
-    private final KafkaTemplate<String, Payload> kafkaTemplate;
+    private final KafkaTemplate<String, Payload> kafkaTemplate;//type Key, Value
     private static final Logger LOGGER = Logger.getLogger(KafkaProducerService.class.getName());
 
     //@Autowired is implicit for single constructor.

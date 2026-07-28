@@ -1,5 +1,8 @@
 package com.rosetta.app.kafka;
 
-public class Payload
+import org.json.JSONObject;
+
+public interface Payload
 {
+    JSONObject toJsonObject();
 }
