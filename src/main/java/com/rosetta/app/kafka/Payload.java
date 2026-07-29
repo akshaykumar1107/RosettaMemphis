@@ -4,5 +4,5 @@ import org.json.JSONObject;
 
 public interface Payload
 {
-    JSONObject toJsonObject();
+    String getJsonString();
 }

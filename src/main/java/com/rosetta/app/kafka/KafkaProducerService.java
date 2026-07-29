@@ -21,13 +21,13 @@ public class KafkaProducerService implements Producer
     /**
      * Producer publishes the message to a topic.
      * @param topic The topic to publish the message to.
-     * @param key The key determines the partition. All messages in a particular partition are processed sequentially.
+     * @param partition All messages in a particular partition are processed sequentially.
      * @param payload A POJO
      */
     @Override
-    public void sendMessage(String topic, String key, Payload payload)
+    public void sendMessage(String topic, int partition, Payload payload)
     {
-        kafkaTemplate.send(topic, key, payload)
+        kafkaTemplate.send(topic, partition, null, payload)//key determines which partition a message goes to. Redundant here as partition is manually assigned.
                 .whenComplete((result, ex) -> {
                     if(ex != null)
                     {
