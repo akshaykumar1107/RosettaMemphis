@@ -27,6 +27,7 @@ public class KafkaProducerService implements Producer
     @Override
     public void sendMessage(String topic, int partition, Payload payload)
     {
+        //Fire and forget non-blocking method => returns CompletableFuture, actual message sending is done by a single kafka-producer-network-thread which also executes whenComplete, making producing messages near instant.
         kafkaTemplate.send(topic, partition, null, payload)//key determines which partition a message goes to. Redundant here as partition is manually assigned.
                 .whenComplete((result, ex) -> {
                     if(ex != null)
