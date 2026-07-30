@@ -32,11 +32,11 @@ public class KafkaProducerService implements Producer
                 .whenComplete((result, ex) -> {
                     if(ex != null)
                     {
-                        LOGGER.log(Level.SEVERE, ex.getMessage());
+                        LOGGER.log(Level.SEVERE, "KAFKA ::: ERROR ::: {0}", ex.getMessage());
                     }
                     else
                     {
-                        LOGGER.log(Level.SEVERE, result.getRecordMetadata().toString());
+                        LOGGER.log(Level.SEVERE, "KAFKA ::: MESSAGE SUCCESS ::: {0}", result.getRecordMetadata().toString());
                     }
                 });
     }
