@@ -22,6 +22,6 @@ public class KafkaConsumerService implements Consumer
     // Ideally partitions = threads.
     public void listen(ConsumerRecord<String, Payload> record)//type Key, Value
     {
-        LOGGER.log(Level.SEVERE, "KAFKA LOGS ::: value : {1}, partition : {2}, thread : {3}", new Object[]{record.value().getJsonString(), record.partition(), Thread.currentThread().getName()});
+        LOGGER.log(Level.SEVERE, "KAFKA LOGS ::: value : {0}, partition : {1}, thread : {2}", new Object[]{record.value().getJsonString(), record.partition(), Thread.currentThread().getName()});
     }
 }
