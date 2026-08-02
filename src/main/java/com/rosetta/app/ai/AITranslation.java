@@ -33,12 +33,12 @@ public class AITranslation implements TranslationService
     @Cacheable(
             value = "translation",//namespace -> key in redis will be "translation::{key}"
 //            key = "#parameterName", basic syntax for a simple one-parameter getter with the parameter value as key.
-            key = "T(com.rosetta.app.cache.CacheUtil).generateKey(#sourceText, #sourceLanguage, #translationLanguage)",
+            key = "T(com.rosetta.app.cache.CacheUtil).generateKey(#sourceText, #sourceLanguage, #translationLanguage, #plan)",
             sync = true//If multiple threads fetch for the SAME key at the same time and if cache is not hit, all but one thread is blocked and fetch from source (method body execution) happens ONCE. After cache is primed, concurrency resumes and no more blocks take place.
     )
-    public String translate(String sourceText, String sourceLanguage, String translationLanguage)
+    public String translate(String sourceText, String sourceLanguage, String translationLanguage, int plan)
     {
-        String key = CacheUtil.generateKey(sourceText, sourceLanguage, translationLanguage);
+        String key = CacheUtil.generateKey(sourceText, sourceLanguage, translationLanguage, plan);
 
         Optional<TranslationCache> translationCacheOptional = translationCacheRepository.findById(key);
 

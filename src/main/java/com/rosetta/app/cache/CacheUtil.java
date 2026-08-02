@@ -7,8 +7,8 @@ import java.nio.charset.StandardCharsets;
 
 public class CacheUtil
 {
-    public static String generateKey(String sourceText, String sourceLanguage, String translationLanguage)
+    public static String generateKey(String sourceText, String sourceLanguage, String translationLanguage, int plan)
     {
-        return Hashing.murmur3_128().hashString(sourceText+sourceLanguage+translationLanguage, StandardCharsets.UTF_8).toString();
+        return Hashing.murmur3_128().hashString(sourceText+sourceLanguage+translationLanguage+plan, StandardCharsets.UTF_8).toString();
     }
 }
