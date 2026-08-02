@@ -1,6 +1,7 @@
 package com.rosetta.app.exception;
 
 import com.rosetta.app.constant.APIResponse;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,9 @@ public class ErrorHandler
 
         APIResponse apiResponse = e instanceof ResponseException ? ((ResponseException) e).getApiResponse() : APIResponse.GENERIC_ERROR;
 
-        return ResponseEntity.status(apiResponse.getHttpStatus()).body(apiResponse.toResponseString());
+        return ResponseEntity
+                .status(apiResponse.getHttpStatus())
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(apiResponse.toResponseString());
     }
 }
