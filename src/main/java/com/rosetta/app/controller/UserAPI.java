@@ -2,7 +2,9 @@ package com.rosetta.app.controller;
 
 import com.rosetta.app.constant.APIResponse;
 import com.rosetta.app.constant.GeneralConstants;
+import com.rosetta.app.service.ApiKeyService;
 import com.rosetta.app.service.UserService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserAPI implements UserController
 {
     private final UserService userService;
+    private final ApiKeyService apiKeyService;
 
-    public UserAPI(UserService userService)
+    public UserAPI(UserService userService, ApiKeyService apiKeyService)
     {
         this.userService = userService;
+        this.apiKeyService = apiKeyService;
     }
 
     @Override
@@ -22,7 +26,14 @@ public class UserAPI implements UserController
     {
         JSONObject requestObj = new JSONObject(requestBody);
         long userId = userService.addNewUser(requestObj.getInt(GeneralConstants.PLAN));
-        return APIResponse.SUCCESS.toResponseString(String.format("User ID %s created.", userId));
+
+        JSONArray apiKeys = new JSONArray();
+        for(int i=0; i<5; i++)
+        {
+            apiKeys.put(apiKeyService.generateApiKey(userId));
+        }
+
+        return APIResponse.getSuccessJsonObj().put(GeneralConstants.API_KEYS, apiKeys).put(GeneralConstants.USER_ID, userId).toString();
     }
 
     @Override
