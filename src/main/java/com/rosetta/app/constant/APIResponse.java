@@ -7,7 +7,9 @@ public enum APIResponse
 {
     SUCCESS(HttpServletResponse.SC_OK, 1000, "%s"),
 
-    GENERIC_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 1001, "Error");
+    GENERIC_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 1001, "Error"),
+    INVALID_API_KEY(HttpServletResponse.SC_UNAUTHORIZED, 1002, "Invalid API Key"),
+    INVALID_USER_ID(HttpServletResponse.SC_NOT_FOUND, 1003, "Invalid User ID");
 
     private final int httpStatus;
     private final int code;
