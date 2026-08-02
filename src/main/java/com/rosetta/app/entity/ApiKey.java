@@ -1,6 +1,8 @@
 package com.rosetta.app.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(
@@ -15,6 +17,7 @@ public class ApiKey
     @ManyToOne(fetch = FetchType.LAZY)//fetch user record only when getUser is called (use debugger)
     @MapsId("userId")//uses id.userId
     @JoinColumn(name = "user_id")//fk column of api_keys
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     public ApiKey(){}

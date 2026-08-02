@@ -1,6 +1,8 @@
 package com.rosetta.app.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "translation_history")
@@ -13,6 +15,7 @@ public class TranslationHistory
 
     @ManyToOne(fetch = FetchType.LAZY)//Many records in the current table can refer to one record in the parent table.
     @JoinColumn(name = "user_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column(name = "source_text", columnDefinition = "TEXT", nullable = false)
