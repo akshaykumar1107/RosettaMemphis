@@ -33,6 +33,12 @@ public enum APIResponse
                 .toString();
     }
 
+    public static JSONObject getSuccessJsonObj()
+    {
+        return new JSONObject()
+                .put(ResponseConstants.CODE, SUCCESS.code);
+    }
+
     public String toResponseString()
     {
         return toResponseString(null);
