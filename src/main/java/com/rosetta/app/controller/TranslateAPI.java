@@ -12,7 +12,7 @@ public class TranslateAPI implements TranslateController
 {
     @Override
     @PostMapping
-    public String translate(@RequestBody String requestBody)
+    public String translate(@RequestBody String requestBody) throws Exception
     {
         return APIResponse.SUCCESS.toResponseString("success");
     }
