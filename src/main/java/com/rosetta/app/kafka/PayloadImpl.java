@@ -7,17 +7,17 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class PayloadImpl implements Payload
 {
-    private String jsonString;
+    private String string;
 
     @Override
-    public void setJsonString(String jsonString)
+    public void setString(String string)
     {
-        this.jsonString = jsonString;
+        this.string = string;
     }
 
     @Override
-    public String getJsonString()
+    public String getString()
     {
-        return jsonString;
+        return string;
     }
 }
