@@ -27,19 +27,19 @@ public class TranslationHistory
     @Column(name = "translated_text", columnDefinition = "TEXT", nullable = false)
     private String translatedText;
 
-    @Column(name = "translated_language", nullable = false)
-    private String translatedLanguage;
+    @Column(name = "translation_language", nullable = false)
+    private String translationLanguage;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Long createdAt;
 
-    public TranslationHistory(User user, String sourceText, String sourceLanguage, String translatedText, String translatedLanguage)
+    public TranslationHistory(User user, String sourceText, String sourceLanguage, String translatedText, String translationLanguage)
     {
         this.user = user;
         this.sourceText = sourceText;
         this.sourceLanguage = sourceLanguage;
         this.translatedText = translatedText;
-        this.translatedLanguage = translatedLanguage;
+        this.translationLanguage = translationLanguage;
     }
 
     @PrePersist//Only executed first time before INSERT query.
@@ -100,14 +100,14 @@ public class TranslationHistory
         this.translatedText = translatedText;
     }
 
-    public String getTranslatedLanguage()
+    public String getTranslationLanguage()
     {
-        return translatedLanguage;
+        return translationLanguage;
     }
 
-    public void setTranslatedLanguage(String translatedLanguage)
+    public void setTranslationLanguage(String translationLanguage)
     {
-        this.translatedLanguage = translatedLanguage;
+        this.translationLanguage = translationLanguage;
     }
 
     public Long getCreatedAt()
