@@ -9,9 +9,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
-public class KafkaConsumerService implements Consumer
+public class TranslationConsumerService implements Consumer
 {
-    private static Logger LOGGER = Logger.getLogger(KafkaConsumerService.class.getName());
+    private static Logger LOGGER = Logger.getLogger(TranslationConsumerService.class.getName());
 
     @Override
     @KafkaListener(topics= ConfigConstants.TOPIC,//topic is a collection of similar messages. This particular listener is subscribed to the "translation" topic.
@@ -22,6 +22,6 @@ public class KafkaConsumerService implements Consumer
     // Ideally partitions = threads.
     public void listen(ConsumerRecord<String, Payload> record)//type Key, Value
     {
-        LOGGER.log(Level.SEVERE, "KAFKA LOGS ::: value : {0}, partition : {1}, thread : {2}", new Object[]{record.value().getJsonString(), record.partition(), Thread.currentThread().getName()});
+        LOGGER.log(Level.SEVERE, "KAFKA LOGS ::: value : {0}, partition : {1}, thread : {2}", new Object[]{record.value().getString(), record.partition(), Thread.currentThread().getName()});
     }
 }
