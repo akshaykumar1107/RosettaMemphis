@@ -14,7 +14,7 @@ public class ApiKey
     @EmbeddedId
     private ApiKeyId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)//fetch user record only when getUser is called (use debugger)
+    @ManyToOne(fetch = FetchType.EAGER)//FetchType.LAZY will fetch user record only when getUser is called (use debugger). EAGER is used here since user object will be re-used elsewhere (always use EAGER if the object will be re-used after transaction).
     @MapsId("userId")//uses id.userId
     @JoinColumn(name = "user_id")//fk column of api_keys
     @OnDelete(action = OnDeleteAction.CASCADE)
