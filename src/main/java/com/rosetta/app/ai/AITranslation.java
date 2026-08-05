@@ -1,6 +1,7 @@
 package com.rosetta.app.ai;
 
 import com.rosetta.app.cache.CacheUtil;
+import com.rosetta.app.constant.ConfigConstants;
 import com.rosetta.app.entity.TranslationCache;
 import com.rosetta.app.repository.TranslationCacheRepository;
 import org.springframework.ai.chat.client.ChatClient;
@@ -50,7 +51,8 @@ public class AITranslation implements Translation
         }
         else
         {
-            translatedText = ollamaChatClient.prompt().user(String.format(
+            ChatClient chatClient = plan == ConfigConstants.PAID_PLAN ? geminiChatClient : ollamaChatClient;
+            translatedText = chatClient.prompt().user(String.format(
                     "Translate the source text from %s to %s. Reply only the translation in plain text.\nSource Text : %s",
                     sourceLanguage, translationLanguage, sourceText)
             ).call().content();
