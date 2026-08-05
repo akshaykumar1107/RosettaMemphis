@@ -1,6 +1,8 @@
 package com.rosetta.app.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 public interface TranslateController
 {
-    String translate(String requestBody) throws Exception;
+    String translate(HttpServletRequest request, String requestBody) throws Exception;
 }
