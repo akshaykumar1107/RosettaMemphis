@@ -1,17 +1,31 @@
 package com.rosetta.app.kafka;
 
+import com.rosetta.app.ai.Translation;
 import com.rosetta.app.constant.ConfigConstants;
+import com.rosetta.app.constant.GeneralConstants;
+import com.rosetta.app.entity.TranslationHistory;
+import com.rosetta.app.repository.TranslationHistoryRepository;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.json.JSONObject;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
 public class TranslationConsumerService implements Consumer
 {
-    private static Logger LOGGER = Logger.getLogger(TranslationConsumerService.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(TranslationConsumerService.class.getName());
+    private final Translation translation;
+    private final TranslationHistoryRepository translationHistoryRepository;
+
+    public TranslationConsumerService(Translation translation, TranslationHistoryRepository translationHistoryRepository)
+    {
+        this.translation = translation;
+        this.translationHistoryRepository = translationHistoryRepository;
+    }
 
     @Override
     @KafkaListener(topics= ConfigConstants.TOPIC,//topic is a collection of similar messages. This particular listener is subscribed to the "translation" topic.
@@ -22,6 +36,30 @@ public class TranslationConsumerService implements Consumer
     // Ideally partitions = threads.
     public void listen(ConsumerRecord<String, Payload> record)//type Key, Value
     {
-        LOGGER.log(Level.SEVERE, "KAFKA LOGS ::: value : {0}, partition : {1}, thread : {2}", new Object[]{record.value().getString(), record.partition(), Thread.currentThread().getName()});
+        JSONObject jsonPayload = new JSONObject(record.value().getString());
+        int partition = record.partition();
+
+        String translatedText = translation.translate(
+                jsonPayload.getString(GeneralConstants.SOURCE_TEXT),
+                jsonPayload.getString(GeneralConstants.SOURCE_LANGUAGE),
+                jsonPayload.getString(GeneralConstants.TRANSLATION_LANGUAGE),
+                jsonPayload.getInt(GeneralConstants.PLAN)
+        );
+
+        long translationId = jsonPayload.getLong(GeneralConstants.TRANSLATION_ID);
+        Optional<TranslationHistory> translationHistoryOptional = translationHistoryRepository.findById(translationId);
+
+        if(translationHistoryOptional.isPresent())
+        {
+            TranslationHistory translationHistory = translationHistoryOptional.get();
+            translationHistory.setTranslatedText(translatedText);
+            translationHistoryRepository.save(translationHistory);
+        }
+        else
+        {
+            LOGGER.log(Level.SEVERE, "KAFKA LOGS ::: Invalid Translation ID : {0}", translationId+"");
+        }
+
+        LOGGER.log(Level.SEVERE, "KAFKA LOGS ::: value : {0}, partition : {1}, thread : {2}", new Object[]{jsonPayload, partition, Thread.currentThread().getName()});
     }
 }
