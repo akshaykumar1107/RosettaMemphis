@@ -12,4 +12,5 @@ public class GeneralConstants
     public static final String TRANSLATION_LANGUAGE = "translation_language";
     public static final String TRANSLATION_ID = "translation_id";
     public static final String TRANSLATION_PLACEHOLDER = "<translation_placeholder>";
+    public static final String TRANSLATED_TEXT = "translated_text";
 }

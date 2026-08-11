@@ -1,15 +1,19 @@
 package com.rosetta.app.service;
 
+import com.rosetta.app.constant.APIResponse;
 import com.rosetta.app.constant.ConfigConstants;
 import com.rosetta.app.constant.GeneralConstants;
 import com.rosetta.app.entity.TranslationHistory;
 import com.rosetta.app.entity.User;
+import com.rosetta.app.exception.ResponseException;
 import com.rosetta.app.kafka.Payload;
 import com.rosetta.app.kafka.Producer;
 import com.rosetta.app.repository.TranslationHistoryRepository;
 import org.json.JSONObject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class TranslationProcessor implements TranslationService
@@ -55,5 +59,38 @@ public class TranslationProcessor implements TranslationService
         producer.sendMessage(ConfigConstants.TOPIC, partition, payload);
 
         return translationId;
+    }
+
+    public String getTranslation(long translationId, long userId) throws Exception
+    {
+        Optional<TranslationHistory> translationHistoryOptional = translationHistoryRepository.findById(translationId);
+
+        if(translationHistoryOptional.isPresent())
+        {
+            TranslationHistory translationHistory = translationHistoryOptional.get();
+
+            if(translationHistory.getUser().getUserId() != userId)
+            {
+                throw new ResponseException(APIResponse.FETCH_TRANSLATION_PERMISSION_DENIED);
+            }
+            else
+            {
+                String translation = translationHistory.getTranslatedText();
+
+                if(GeneralConstants.TRANSLATION_PLACEHOLDER.equals(translation))
+                {
+                    throw new ResponseException(APIResponse.TRANSLATION_NOT_YET_PROCESSED);
+                }
+                else
+                {
+                    return translation;
+                }
+            }
+
+        }
+        else
+        {
+            throw new ResponseException(APIResponse.INVALID_TRANSLATION_ID);
+        }
     }
 }

@@ -8,10 +8,7 @@ import com.rosetta.app.service.TranslationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(produces = "application/json")
@@ -35,5 +32,12 @@ public class TranslateAPI implements TranslateController
         JSONObject requestObj = new JSONObject(requestBody);
         long translationId = translationService.produceTranslation(requestObj.getString(GeneralConstants.SOURCE_TEXT), requestObj.getString(GeneralConstants.SOURCE_LANGUAGE), requestObj.getString(GeneralConstants.TRANSLATION_LANGUAGE), (User) request.getAttribute(GeneralConstants.USER));
         return APIResponse.getSuccessJsonObj().put(GeneralConstants.TRANSLATION_ID, translationId).toString();
+    }
+
+    @Override
+    @GetMapping("/api/v1/translate/{translationId}")
+    public String getTranslation(HttpServletRequest request, @PathVariable(value = "translationId") long translationId) throws Exception
+    {
+        return APIResponse.getSuccessJsonObj().put(GeneralConstants.TRANSLATED_TEXT, translationService.getTranslation(translationId, ((User) request.getAttribute(GeneralConstants.USER)).getUserId())).toString();
     }
 }

@@ -9,7 +9,10 @@ public enum APIResponse
 
     GENERIC_ERROR(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, 1001, "Error"),
     INVALID_API_KEY(HttpServletResponse.SC_UNAUTHORIZED, 1002, "Invalid API Key"),
-    INVALID_USER_ID(HttpServletResponse.SC_NOT_FOUND, 1003, "Invalid User ID");
+    INVALID_USER_ID(HttpServletResponse.SC_NOT_FOUND, 1003, "Invalid User ID"),
+    INVALID_TRANSLATION_ID(HttpServletResponse.SC_NOT_FOUND, 1004, "Invalid Translation ID"),
+    TRANSLATION_NOT_YET_PROCESSED(HttpServletResponse.SC_ACCEPTED, 1005, "Translation not yet processed. Try again later."),
+    FETCH_TRANSLATION_PERMISSION_DENIED(HttpServletResponse.SC_FORBIDDEN, 1006, "Permission denied to fetch this translation.");
 
     private final int httpStatus;
     private final int code;
