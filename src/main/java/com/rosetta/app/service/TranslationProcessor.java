@@ -28,7 +28,7 @@ public class TranslationProcessor implements TranslationService
     @Override
     public long produceTranslation(String sourceText, String sourceLanguage, String translationLanguage, User user) throws Exception
     {
-        TranslationHistory translationHistory = new TranslationHistory(user, sourceText, sourceLanguage, "Loading", translationLanguage);
+        TranslationHistory translationHistory = new TranslationHistory(user, sourceText, sourceLanguage, GeneralConstants.TRANSLATION_PLACEHOLDER, translationLanguage);
         translationHistoryRepository.save(translationHistory);
 
         long translationId = translationHistory.getTranslationId();
