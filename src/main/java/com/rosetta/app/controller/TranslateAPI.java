@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/translate", produces = "application/json")
+@RequestMapping(produces = "application/json")
 public class TranslateAPI implements TranslateController
 {
     private final TranslationService translationService;
@@ -29,7 +29,7 @@ public class TranslateAPI implements TranslateController
     }
 
     @Override
-    @PostMapping
+    @PostMapping("/api/v1/translate")
     public String translate(HttpServletRequest request, @RequestBody String requestBody) throws Exception
     {
         JSONObject requestObj = new JSONObject(requestBody);
