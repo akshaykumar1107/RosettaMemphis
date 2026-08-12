@@ -23,7 +23,7 @@ public class AITranslator implements Translator
     private final CassandraTemplate cassandraTemplate;
 
     private static final InsertOptions TRANSLATION_CACHE_INSERT_OPTIONS = InsertOptions.builder()
-            .ttl(Duration.ofDays(ConfigConstants.CACHE_TTL_DAYS))
+            .ttl(Duration.ofDays(30))//Cassandra cache ttl to remove stale data in case of model upgrade(s).
             .build();
 
     public AITranslator(
