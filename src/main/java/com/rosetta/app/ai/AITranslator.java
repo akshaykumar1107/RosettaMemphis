@@ -7,8 +7,11 @@ import com.rosetta.app.repository.TranslationCacheRepository;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.cassandra.core.CassandraTemplate;
+import org.springframework.data.cassandra.core.InsertOptions;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.Optional;
 
 @Service
@@ -17,16 +20,23 @@ public class AITranslator implements Translator
     private final ChatClient ollamaChatClient;
     private final ChatClient geminiChatClient;
     private final TranslationCacheRepository translationCacheRepository;
+    private final CassandraTemplate cassandraTemplate;
+
+    private static final InsertOptions TRANSLATION_CACHE_INSERT_OPTIONS = InsertOptions.builder()
+            .ttl(Duration.ofDays(ConfigConstants.CACHE_TTL_DAYS))
+            .build();
 
     public AITranslator(
             @Qualifier("ollamaChatClient") ChatClient ollamaChatClient,
             @Qualifier("geminiChatClient") ChatClient geminiChatClient,
-            TranslationCacheRepository translationCacheRepository
+            TranslationCacheRepository translationCacheRepository,
+            CassandraTemplate cassandraTemplate
     )
     {
         this.ollamaChatClient = ollamaChatClient;
         this.geminiChatClient = geminiChatClient;
         this.translationCacheRepository = translationCacheRepository;
+        this.cassandraTemplate = cassandraTemplate;
     }
 
     //db 0 is used by default.
@@ -57,7 +67,7 @@ public class AITranslator implements Translator
                     sourceLanguage, translationLanguage, sourceText)
             ).call().content();
 
-            translationCacheRepository.save(new TranslationCache(key, translatedText));//Use "new" to create entity objects.
+            cassandraTemplate.insert(new TranslationCache(key, translatedText), TRANSLATION_CACHE_INSERT_OPTIONS);//Use "new" to create entity objects.
         }
 
         return translatedText;
