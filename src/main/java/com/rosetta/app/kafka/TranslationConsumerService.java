@@ -1,6 +1,6 @@
 package com.rosetta.app.kafka;
 
-import com.rosetta.app.ai.Translation;
+import com.rosetta.app.ai.Translator;
 import com.rosetta.app.constant.ConfigConstants;
 import com.rosetta.app.constant.GeneralConstants;
 import com.rosetta.app.entity.TranslationHistory;
@@ -18,12 +18,12 @@ import java.util.logging.Logger;
 public class TranslationConsumerService implements Consumer
 {
     private static final Logger LOGGER = Logger.getLogger(TranslationConsumerService.class.getName());
-    private final Translation translation;
+    private final Translator translator;
     private final TranslationHistoryRepository translationHistoryRepository;
 
-    public TranslationConsumerService(Translation translation, TranslationHistoryRepository translationHistoryRepository)
+    public TranslationConsumerService(Translator translator, TranslationHistoryRepository translationHistoryRepository)
     {
-        this.translation = translation;
+        this.translator = translator;
         this.translationHistoryRepository = translationHistoryRepository;
     }
 
@@ -39,7 +39,7 @@ public class TranslationConsumerService implements Consumer
         JSONObject jsonPayload = new JSONObject(record.value().getString());
         int partition = record.partition();
 
-        String translatedText = translation.translate(
+        String translatedText = translator.translate(
                 jsonPayload.getString(GeneralConstants.SOURCE_TEXT),
                 jsonPayload.getString(GeneralConstants.SOURCE_LANGUAGE),
                 jsonPayload.getString(GeneralConstants.TRANSLATION_LANGUAGE),

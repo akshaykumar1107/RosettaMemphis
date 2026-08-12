@@ -12,13 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AITranslation implements Translation
+public class AITranslator implements Translator
 {
     private final ChatClient ollamaChatClient;
     private final ChatClient geminiChatClient;
     private final TranslationCacheRepository translationCacheRepository;
 
-    public AITranslation(
+    public AITranslator(
             @Qualifier("ollamaChatClient") ChatClient ollamaChatClient,
             @Qualifier("geminiChatClient") ChatClient geminiChatClient,
             TranslationCacheRepository translationCacheRepository
