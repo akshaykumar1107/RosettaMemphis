@@ -40,4 +40,11 @@ public class TranslateAPI implements TranslateController
     {
         return APIResponse.getSuccessJsonObj().put(GeneralConstants.TRANSLATED_TEXT, translationService.getTranslation(translationId, ((User) request.getAttribute(GeneralConstants.USER)).getUserId())).toString();
     }
+
+    @Override
+    @GetMapping("/api/v1/translate")
+    public String getTranslations(HttpServletRequest request, @RequestParam(value = GeneralConstants.PAGE_NUMBER) int pageNumber, @RequestParam(value = GeneralConstants.PAGE_SIZE) int pageSize) throws Exception
+    {
+        return APIResponse.getSuccessJsonObj().put("records", translationService.getTranslations(((User) request.getAttribute(GeneralConstants.USER)).getUserId(), pageNumber, pageSize)).toString();
+    }
 }

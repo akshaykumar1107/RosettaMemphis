@@ -9,10 +9,14 @@ import com.rosetta.app.exception.ResponseException;
 import com.rosetta.app.kafka.Payload;
 import com.rosetta.app.kafka.Producer;
 import com.rosetta.app.repository.TranslationHistoryRepository;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,6 +65,7 @@ public class TranslationProcessor implements TranslationService
         return translationId;
     }
 
+    @Override
     public String getTranslation(long translationId, long userId) throws Exception
     {
         Optional<TranslationHistory> translationHistoryOptional = translationHistoryRepository.findById(translationId);
@@ -91,6 +96,35 @@ public class TranslationProcessor implements TranslationService
         else
         {
             throw new ResponseException(APIResponse.INVALID_TRANSLATION_ID);
+        }
+    }
+
+    @Override
+    public JSONArray getTranslations(long userId, int pageNumber, int pageSize) throws Exception
+    {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        List<TranslationHistory> translationHistories = translationHistoryRepository.findByUser_UserIdOrderByCreatedAtDesc(userId, pageable);
+
+        if(translationHistories.isEmpty())
+        {
+            throw new ResponseException(APIResponse.RECORDS_NOT_FOUND);
+        }
+        else
+        {
+            JSONArray translationHistoriesArr = new JSONArray();
+
+            translationHistories.stream().forEach(translationHistory ->
+                    translationHistoriesArr.put(new JSONObject()
+                            .put(GeneralConstants.TRANSLATION_ID, translationHistory.getTranslationId())
+                            .put(GeneralConstants.SOURCE_LANGUAGE, translationHistory.getSourceLanguage())
+                            .put(GeneralConstants.TRANSLATION_LANGUAGE, translationHistory.getTranslationLanguage())
+                            .put(GeneralConstants.SOURCE_TEXT, translationHistory.getSourceText())
+                            .put(GeneralConstants.TRANSLATED_TEXT, translationHistory.getTranslatedText())
+                            .put(GeneralConstants.CREATED_AT, translationHistory.getCreatedAt()))
+
+            );
+
+            return translationHistoriesArr;
         }
     }
 }

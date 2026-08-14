@@ -13,4 +13,7 @@ public class GeneralConstants
     public static final String TRANSLATION_ID = "translation_id";
     public static final String TRANSLATION_PLACEHOLDER = "<translation_placeholder>";
     public static final String TRANSLATED_TEXT = "translated_text";
+    public static final String CREATED_AT = "created_at";
+    public static final String PAGE_NUMBER = "page_number";
+    public static final String PAGE_SIZE = "page_size";
 }
