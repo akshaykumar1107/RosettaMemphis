@@ -43,8 +43,8 @@ public class TranslateAPI implements TranslateController
 
     @Override
     @GetMapping("/api/v1/translate")
-    public String getTranslations(HttpServletRequest request, @RequestParam(value = GeneralConstants.PAGE_NUMBER) int pageNumber, @RequestParam(value = GeneralConstants.PAGE_SIZE) int pageSize) throws Exception
+    public String getTranslations(HttpServletRequest request, @RequestParam(value = GeneralConstants.PAGE_NUMBER) int pageNumber, @RequestParam(value = GeneralConstants.PAGE_SIZE) int pageSize, @RequestParam(value = GeneralConstants.IS_ASCENDING) boolean isAscending) throws Exception
     {
-        return APIResponse.getSuccessJsonObj().put("records", translationService.getTranslations(((User) request.getAttribute(GeneralConstants.USER)).getUserId(), pageNumber, pageSize)).toString();
+        return APIResponse.getSuccessJsonObj().put("records", translationService.getTranslations(((User) request.getAttribute(GeneralConstants.USER)).getUserId(), pageNumber, pageSize, isAscending)).toString();
     }
 }

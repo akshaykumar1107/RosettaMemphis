@@ -9,4 +9,5 @@ import java.util.List;
 public interface TranslationHistoryRepository extends JpaRepository<TranslationHistory, Long>
 {
     List<TranslationHistory> findByUser_UserIdOrderByCreatedAtDesc(Long userId, Pageable pageable);
+    List<TranslationHistory> findByUser_UserIdOrderByCreatedAtAsc(Long userId, Pageable pageable);
 }

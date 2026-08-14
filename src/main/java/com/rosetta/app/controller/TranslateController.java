@@ -6,5 +6,5 @@ public interface TranslateController
 {
     String translate(HttpServletRequest request, String requestBody) throws Exception;
     String getTranslation(HttpServletRequest request, long translationId) throws Exception;
-    String getTranslations(HttpServletRequest request, int pageNumber, int pageSize) throws Exception;
+    String getTranslations(HttpServletRequest request, int pageNumber, int pageSize, boolean isAscending) throws Exception;
 }

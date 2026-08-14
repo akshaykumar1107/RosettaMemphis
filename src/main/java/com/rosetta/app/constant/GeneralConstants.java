@@ -16,4 +16,5 @@ public class GeneralConstants
     public static final String CREATED_AT = "created_at";
     public static final String PAGE_NUMBER = "page_number";
     public static final String PAGE_SIZE = "page_size";
+    public static final String IS_ASCENDING = "is_ascending";
 }

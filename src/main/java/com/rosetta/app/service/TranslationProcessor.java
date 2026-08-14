@@ -100,12 +100,15 @@ public class TranslationProcessor implements TranslationService
     }
 
     @Override
-    public JSONArray getTranslations(long userId, int pageNumber, int pageSize) throws Exception
+    public JSONArray getTranslations(long userId, int pageNumber, int pageSize, boolean isAscending) throws Exception
     {
         if(pageSize > 50) throw new ResponseException(APIResponse.MAX_LIMIT_ERROR);
 
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        List<TranslationHistory> translationHistories = translationHistoryRepository.findByUser_UserIdOrderByCreatedAtDesc(userId, pageable);
+        List<TranslationHistory> translationHistories =
+                isAscending ?
+                        translationHistoryRepository.findByUser_UserIdOrderByCreatedAtAsc(userId, pageable)
+                    :   translationHistoryRepository.findByUser_UserIdOrderByCreatedAtDesc(userId, pageable);
 
         if(translationHistories.isEmpty())
         {
