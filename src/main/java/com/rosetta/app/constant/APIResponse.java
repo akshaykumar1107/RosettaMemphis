@@ -13,7 +13,8 @@ public enum APIResponse
     INVALID_TRANSLATION_ID(HttpServletResponse.SC_NOT_FOUND, 1004, "Invalid Translation ID"),
     TRANSLATION_NOT_YET_PROCESSED(HttpServletResponse.SC_ACCEPTED, 1005, "Translation not yet processed. Try again later."),
     FETCH_TRANSLATION_PERMISSION_DENIED(HttpServletResponse.SC_FORBIDDEN, 1006, "Permission denied to fetch this translation."),
-    RECORDS_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, 1007, "Records not found.");
+    RECORDS_NOT_FOUND(HttpServletResponse.SC_NOT_FOUND, 1007, "Records not found."),
+    MAX_LIMIT_ERROR(HttpServletResponse.SC_NOT_FOUND, 1008, "Max limit is 50.");
 
     private final int httpStatus;
     private final int code;
