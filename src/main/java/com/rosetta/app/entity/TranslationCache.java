@@ -7,7 +7,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Table("translation_cache")
 public class TranslationCache
 {
-    @PrimaryKey
+    @PrimaryKey//also the partition key.
     @Column("cache_key")
     private String cacheKey;
 
