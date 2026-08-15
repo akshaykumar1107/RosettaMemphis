@@ -18,10 +18,10 @@ public class TranslationHistory
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @Column(name = "source_text", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "source_text", columnDefinition = "TEXT", nullable = false)//TEXT datatype can store a huge string.
     private String sourceText;
 
-    @Column(name = "source_language", nullable = false)
+    @Column(name = "source_language", nullable = false)//VARCHAR(255)
     private String sourceLanguage;
 
     @Column(name = "translated_text", columnDefinition = "TEXT", nullable = false)
