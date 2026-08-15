@@ -15,14 +15,10 @@ import org.springframework.web.bind.annotation.*;
 public class TranslateAPI implements TranslateController
 {
     private final TranslationService translationService;
-    private final Producer producer;
-    private final ApplicationContext applicationContext;
 
-    public TranslateAPI(TranslationService translationService, Producer producer, ApplicationContext applicationContext) throws Exception
+    public TranslateAPI(TranslationService translationService)
     {
         this.translationService = translationService;
-        this.producer = producer;
-        this.applicationContext = applicationContext;
     }
 
     @Override
