@@ -16,7 +16,7 @@ public class User
 
     public User() {}//no-arg constructor is required.
 
-    public User(Integer plan)//no need to pass pk in co nstructor.
+    public User(Integer plan)//no need to pass pk in constructor.
     {
         this.plan = plan;
     }
