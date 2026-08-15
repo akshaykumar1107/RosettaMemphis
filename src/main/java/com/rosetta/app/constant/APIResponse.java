@@ -41,7 +41,7 @@ public enum APIResponse
     public static JSONObject getSuccessJsonObj()
     {
         return new JSONObject()
-                .put(ResponseConstants.CODE, SUCCESS.code);
+                .put(ResponseConstants.CODE, SUCCESS.getCode());
     }
 
     public String toResponseString()
