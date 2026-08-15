@@ -17,4 +17,5 @@ public class GeneralConstants
     public static final String PAGE_NUMBER = "page_number";
     public static final String PAGE_SIZE = "page_size";
     public static final String IS_ASCENDING = "is_ascending";
+    public static final String RECORDS = "records";
 }
