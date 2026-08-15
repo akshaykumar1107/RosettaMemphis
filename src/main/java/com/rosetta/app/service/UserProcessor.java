@@ -13,7 +13,7 @@ public class UserProcessor implements UserService
 {
     private final UserRepository userRepository;
 
-    public UserProcessor(UserRepository userRepository) throws Exception
+    public UserProcessor(UserRepository userRepository)
     {
         this.userRepository = userRepository;
     }
