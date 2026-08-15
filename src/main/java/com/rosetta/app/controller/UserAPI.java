@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping(produces = "application/json")
 public class UserAPI implements UserController
 {
     private final UserService userService;
@@ -21,7 +22,7 @@ public class UserAPI implements UserController
     }
 
     @Override
-    @PostMapping(value = "api/v1/users", produces = "application/json")
+    @PostMapping(value = "api/v1/users")
     public String addUser(@RequestBody String requestBody) throws Exception
     {
         JSONObject requestObj = new JSONObject(requestBody);
@@ -37,7 +38,7 @@ public class UserAPI implements UserController
     }
 
     @Override
-    @PatchMapping(value = "api/v1/users/{userId}", produces = "application/json")
+    @PatchMapping(value = "api/v1/users/{userId}")
     public String modifyUser(@PathVariable("userId") long userId, @RequestBody String requestBody) throws Exception
     {
         JSONObject requestObj = new JSONObject(requestBody);
@@ -46,7 +47,7 @@ public class UserAPI implements UserController
     }
 
     @Override
-    @DeleteMapping(value = "api/v1/users/{userId}", produces = "application/json")
+    @DeleteMapping(value = "api/v1/users/{userId}")
     public String deleteUser(@PathVariable("userId") long userId) throws Exception
     {
         userService.deleteUser(userId);
