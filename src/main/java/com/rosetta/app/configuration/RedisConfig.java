@@ -1,6 +1,5 @@
 package com.rosetta.app.configuration;
 
-import com.rosetta.app.constant.ConfigConstants;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
