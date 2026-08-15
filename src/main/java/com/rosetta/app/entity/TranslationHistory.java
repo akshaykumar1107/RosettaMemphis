@@ -33,6 +33,8 @@ public class TranslationHistory
     @Column(name = "created_at", nullable = false, updatable = false)
     private Long createdAt;
 
+    public TranslationHistory() {}
+
     public TranslationHistory(User user, String sourceText, String sourceLanguage, String translatedText, String translationLanguage)
     {
         this.user = user;
@@ -47,8 +49,6 @@ public class TranslationHistory
     {
         this.createdAt = System.currentTimeMillis();
     }
-
-    public TranslationHistory() {}
 
     public Long getTranslationId()
     {
