@@ -10,6 +10,7 @@
 4. Free plan gets one kafka consumer thread. Paid gets two for priority processing.
 5. Translations are cached in-memory and in persistent storage for sub millisecond processing.
 6. Provides API key based authentication for seamless integration.
+7. Built-in logging for failure analysis and debugging.
 
 ### Technology Stack
 1. Spring Boot 4.1.0
