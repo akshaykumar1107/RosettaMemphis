@@ -19,6 +19,7 @@
 4. Spring Kafka
 5. Spring Data Redis
 6. Spring Data Cassandra
+7. Docker (for running cassandra and kafka on Windows.)
 
 ## Setup
 
