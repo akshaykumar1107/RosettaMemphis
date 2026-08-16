@@ -62,6 +62,12 @@ maxmemory-policy allkeys-lru
 4. Ensure that ollama is running before app server startup.
 5. Add the exact name of the model to the key `spring.ai.ollama.chat.options.model` in `application.properties`
 
+## Build and App Server Startup
+1. Open terminal
+2. cd to the project directory and execute `mvn clean package`.
+3. cd to the `target` folder in the project and execute `java -jar rosetta-memphis-0.0.1-SNAPSHOT.jar`
+4. `rosetta.log` can be found in the `target` folder.
+
 ## Request CURL
 
 ## Users
